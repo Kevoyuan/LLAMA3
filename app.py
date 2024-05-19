@@ -17,6 +17,11 @@ def generate_response():
         full_message += token
     return full_message
 
+# Function to generate a chat name based on its content
+def generate_chat_name(chat):
+    user_messages = " ".join([msg["content"] for msg in chat if msg["role"] == "user"])
+    return user_messages[:20] + "..." if len(user_messages) > 20 else user_messages
+
 # Set the title of the main app
 st.title("💬 Local LLMBot")
 
@@ -32,8 +37,10 @@ with st.sidebar:
 
     # Display existing chat sessions in a selectbox for navigation
     chat_keys = [key for key in st.session_state.keys() if key.startswith("chat_")]
+    chat_names = {key: generate_chat_name(st.session_state[key]) for key in chat_keys}
+    
     if chat_keys:
-        selected_key = st.selectbox("Select Chat Session", options=chat_keys, index=chat_keys.index(st.session_state.get("current_chat", chat_keys[0])))
+        selected_key = st.selectbox("Select Chat Session", options=chat_keys, format_func=lambda x: chat_names[x], index=chat_keys.index(st.session_state.get("current_chat", chat_keys[0])))
         st.session_state["current_chat"] = selected_key
 
         # Button to clear the selected chat history
@@ -48,7 +55,7 @@ with st.sidebar:
                 st.session_state["current_chat"] = remaining_chat_keys[0]
             else:
                 del st.session_state["current_chat"]
-            st.experimental_rerun()
+            st.rerun()
 
 # Main area where the current chat is displayed and interacted with
 if "current_chat" in st.session_state:
@@ -59,7 +66,12 @@ if "current_chat" in st.session_state:
         response = generate_response()
         st.session_state[st.session_state["current_chat"]].append({"role": "assistant", "content": response})
         
+        # Rename the current chat based on its new content
+        current_chat_key = st.session_state["current_chat"]
+        new_chat_name = generate_chat_name(st.session_state[current_chat_key])
+        chat_names[current_chat_key] = new_chat_name
+
         # Rerun to display the new messages
-        st.experimental_rerun()
+        st.rerun()
 else:
     st.write("No active chat sessions. Create a new chat using the sidebar.")
