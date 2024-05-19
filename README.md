@@ -41,7 +41,7 @@ Before installing the required Python dependencies, ensure you have Ollama insta
     ollama run llama3
     ```
 
-### Windows
+### Install LLAMA3 ChatBot
 
 1. **Clone the Repository**
     ```bash
@@ -51,46 +51,8 @@ Before installing the required Python dependencies, ensure you have Ollama insta
 
 2. **Create and Activate Virtual Environment**
     ```bash
-    python -m venv venv
-    .\venv\Scripts\activate
-    ```
-
-3. **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-### macOS
-
-1. **Clone the Repository**
-    ```bash
-    git clone https://github.com/Kevoyuan/LLAMA3.git
-    cd LocalLLMBot
-    ```
-
-2. **Create and Activate Virtual Environment**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-
-3. **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-### Linux
-
-1. **Clone the Repository**
-    ```bash
-    git clone https://github.com/Kevoyuan/LLAMA3.git
-    cd LocalLLMBot
-    ```
-
-2. **Create and Activate Virtual Environment**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
+    python -m venv llama3
+    .\llama3\Scripts\activate
     ```
 
 3. **Install Dependencies**
@@ -106,12 +68,12 @@ Before installing the required Python dependencies, ensure you have Ollama insta
 
     Windows:
     ```bash
-    .\venv\Scripts\activate
+    .\llama3\Scripts\activate
     ```
 
     macOS/Linux:
     ```bash
-    source venv/bin/activate
+    source llama3/bin/activate
     ```
 
 2. **Run the Streamlit App**
